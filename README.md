@@ -3,9 +3,9 @@
 VecTextSearch 是一个使用 OpenAI 语言模型生成文本向量并在 Weaviate 数据库中进行高效搜索的项目。它允许用户将文本数据存储在 Weaviate 数据库中，并根据文本相似性快速搜索和检索相关文本。项目使用 Golang 编写，并提供一个简单的 REST API 供客户端调用。
 
 ## 聊天记录
-[聊天记录1](history/chat1.md)
+[聊天记录1](history/chat1.md) - 创建项目
 
-[聊天记录2](history/chat2.md)
+[聊天记录2](history/chat2.md) - 修改Dockerfile和Makefile
 
 ## 效果
 ![image](images/postman.png)
@@ -78,7 +78,8 @@ Response: 搜索成功后，将返回一个包含相似文本信息的 JSON 对�
       "id": "文章唯一标识符",
       "name": "文章名称",
       "content": "文章内容",
-      "distance": "与查询内容的距离"
+      "distance": "与查询内容的距离",
+      "certainty": "与查询内容的相似度"
     },
     ...
   ]

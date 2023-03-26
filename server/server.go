@@ -14,6 +14,7 @@ import (
 	"github.com/szpnygo/VecTextSearch/config"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate/graphql"
+	"github.com/weaviate/weaviate/entities/models"
 )
 
 var appConfig *config.AppConfig
@@ -101,7 +102,7 @@ func addVector(id string, dataSchema map[string]interface{}, vector []float32) e
 }
 
 // 根据相似向量搜索 Weaviate 数据库
-func searchVectors(vector []float32) (interface{}, error) {
+func searchVectors(vector []float32) (*models.GraphQLResponse, error) {
 	className := "Text"
 	name := graphql.Field{Name: "name"}
 	content := graphql.Field{Name: "content"}
@@ -186,13 +187,41 @@ func searchSimilarTextsHandler(c *gin.Context) {
 		float32Embedding[i] = float32(v)
 	}
 
-	result, err := searchVectors(float32Embedding)
+	response, err := searchVectors(float32Embedding)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, result)
+	simplifiedResult := simplifyResult(response.Data)
+
+	c.JSON(http.StatusOK, simplifiedResult)
+}
+
+func simplifyResult(data map[string]models.JSONObject) []map[string]interface{} {
+	get := data["Get"].(map[string]interface{})
+	texts := get["Text"].([]interface{})
+
+	simplifiedTexts := make([]map[string]interface{}, len(texts))
+
+	for i, text := range texts {
+		textMap := text.(map[string]interface{})
+		additional := textMap["_additional"].(map[string]interface{})
+		certainty := additional["certainty"].(float64)
+		distance := additional["distance"].(float64)
+		content := textMap["content"].(string)
+		name := textMap["name"].(string)
+
+		simplifiedText := map[string]interface{}{
+			"certainty": certainty,
+			"distance":  distance,
+			"content":   content,
+			"name":      name,
+		}
+		simplifiedTexts[i] = simplifiedText
+	}
+
+	return simplifiedTexts
 }
 
 // 启动 API 服务器
