@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # 编译项目
-RUN CGO_ENABLED=0 GOOS=linux go build -o VecTextSearch main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o VecTextSearch ./cmd/main.go
 
 # 使用官方 alpine 镜像作为基础镜像以减小镜像大小
 FROM alpine:latest
