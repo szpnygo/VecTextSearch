@@ -609,6 +609,7 @@ Response: 搜索成功后，将返回一个包含相似文本信息的 JSON 对�
     ...
   ]
 }
+```
 上述修改将返回结构调整为包含相似文本信息的 JSON 对象，其字段包括 id、name、content、distance 和 certainty。这样的修改使得返回结果更加直观和简洁。其他部分的 README 内容保持不变。
 ### Neo
 请把以上所有修改写一个commit message，并表明是你写的
