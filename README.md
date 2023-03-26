@@ -49,11 +49,12 @@ VecTextSearch 提供了两个 REST API 接口：
 - Content-Type: application/json
 - Request Payload:
 
-json
-Copy code
+```json
 {
   "content": "查询内容"
 }
+```
+
 Response: 搜索成功后，将返回一个包含相似文本信息的 JSON 对象。
 
 ```json
