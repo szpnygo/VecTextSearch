@@ -7,7 +7,6 @@ VecTextSearch 是一个使用 OpenAI 语言模型生成文本向量并在 Weavia
 
 [聊天记录2](history/chat2.md) - 修改Dockerfile和Makefile
 
-
 [聊天记录3](history/chat3.md) - 简化向量搜索的返回结果，修改数据结构
 
 ## 效果
@@ -89,11 +88,6 @@ Response: 搜索成功后，将返回一个包含相似文本信息的 JSON 对�
 }
 ```
 
-## 部署与运行
-请参考项目的 Dockerfile 和 docker-compose.yml 文件，使用 Docker 和 Docker Compose 部署和运行 VecTextSearch 及其依赖的 Weaviate 服务。具体部署和运行方法，请参考本仓库中的 Docker 部署指南。
-
-注意：在运行项目之前，请确保您已经配置了 config.yml 文件，设置了正确的 OpenAI API 密钥和 API 端口。
-
 ## Makefile 功能说明
 
 - `make init`：创建 `.env` 文件模板，用于配置环境变量。
@@ -101,6 +95,24 @@ Response: 搜索成功后，将返回一个包含相似文本信息的 JSON 对�
 - `make push`：将 Docker 镜像推送到 Docker Hub。
 - `make run`：在本地运行应用程序。
 
+## 启动Weaviate向量数据库
+```bash
+docker run -d \
+  --name weaviate \
+  -p 8888:8080 \
+  --restart on-failure:0 \
+  -e QUERY_DEFAULTS_LIMIT=25 \
+  -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
+  -e PERSISTENCE_DATA_PATH='/var/lib/weaviate' \
+  -e DEFAULT_VECTORIZER_MODULE='none' \
+  -e ENABLE_MODULES='' \
+  -e AUTOSCHEMA_ENABLED=true \
+  -e CLUSTER_HOSTNAME='node1' \
+  semitechnologies/weaviate:1.18.1 \
+  --host 0.0.0.0 \
+  --port 8080 \
+  --scheme http
+```
 
 ## 开发与贡献
 如果您想为 VecTextSearch 做出贡献或者对项目进行二次开发，您可以按照以下步骤操作：
