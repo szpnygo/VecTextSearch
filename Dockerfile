@@ -29,10 +29,9 @@ COPY --from=builder /app/VecTextSearch /app/VecTextSearch
 WORKDIR /app
 
 # 设置环境变量
-ENV OPENAI_API_KEY=your_openai_api_key_here
-ENV API_PORT=8000
-ENV WEAVIATE_HOST=localhost
-ENV WEAVIATE_PORT=8888
+ENV VECTEXTSEARCH_OPENAI_KEY=your_openai_api_key_here
+ENV VECTEXTSEARCH_API_PORT=8000
+ENV VECTEXTSEARCH_WEAVIATE_URL=localhost:8888
 
 # 暴露端口
 EXPOSE 8000
