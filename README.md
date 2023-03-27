@@ -9,6 +9,8 @@ VecTextSearch 是一个使用 OpenAI 语言模型生成文本向量并在 Weavia
 
 [聊天记录3](history/chat3.md) - 简化向量搜索的返回结果，修改数据结构
 
+[聊天记录4](history/chat4.md) - 重构项目结构
+
 ## 效果
 ![image](images/postman.png)
 

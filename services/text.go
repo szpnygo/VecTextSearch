@@ -1,0 +1,68 @@
+package services
+
+import (
+	"github.com/google/uuid"
+	"github.com/szpnygo/VecTextSearch/config"
+	"github.com/weaviate/weaviate-go-client/v4/weaviate"
+	"github.com/weaviate/weaviate/entities/models"
+)
+
+var weaviateClient *weaviate.Client
+
+func initWeaviateClient(config *config.AppConfig) {
+	cfg := weaviate.Config{
+		Host:   config.WeaviateURL,
+		Scheme: "http",
+	}
+	weaviateClient = weaviate.New(cfg)
+}
+
+func AddText(appConfig *config.AppConfig, name, content string) (string, error) {
+	if weaviateClient == nil {
+		initWeaviateClient(appConfig)
+	}
+	embedding, err := getEmbedding(content, appConfig.OpenAIKey)
+	if err != nil {
+		return "", err
+	}
+
+	float32Embedding := make([]float32, len(embedding))
+	for i, v := range embedding {
+		float32Embedding[i] = float32(v)
+	}
+
+	id := uuid.New().String()
+	dataSchema := map[string]interface{}{
+		"name":    name,
+		"content": content,
+	}
+
+	err = addVector(weaviateClient, id, dataSchema, float32Embedding)
+	if err != nil {
+		return "", err
+	}
+
+	return id, nil
+}
+
+func SearchSimilarTexts(appConfig *config.AppConfig, content string) (*models.GraphQLResponse, error) {
+	if weaviateClient == nil {
+		initWeaviateClient(appConfig)
+	}
+	embedding, err := getEmbedding(content, appConfig.OpenAIKey)
+	if err != nil {
+		return nil, err
+	}
+
+	float32Embedding := make([]float32, len(embedding))
+	for i, v := range embedding {
+		float32Embedding[i] = float32(v)
+	}
+
+	response, err := searchVectors(weaviateClient, float32Embedding)
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
