@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "ChatGPT Markdown Exporter",
+    "version": "1.0",
+    "description": "Export ChatGPT conversation to Markdown",
+    "permissions": ["activeTab", "cookies", "https://chat.openai.com/*", "tabs"],
+    "content_scripts": [
+      {
+        "matches": ["https://chat.openai.com/chat/*"],
+        "js": ["content_script.js"]
+      }
+    ],
+    "background": {
+      "scripts": ["background_script.js"],
+      "persistent": false
+    },
+    "icons": {
+      "48": "icon48.png"
+    }
+  }
+  

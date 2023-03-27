@@ -11,6 +11,8 @@ VecTextSearch 是一个使用 OpenAI 语言模型生成文本向量并在 Weavia
 
 [聊天记录4](history/chat4.md) - 重构项目结构
 
+[聊天记录5](history/chat5.md) - 把ChatGPT的聊天对话直接下载为Markdown文件
+
 ## 效果
 ![image](images/postman.png)
 
@@ -115,6 +117,19 @@ docker run -d \
   --port 8080 \
   --scheme http
 ```
+
+## ChatGPT 转 Markdown Chrome 插件
+
+ChatGPT 转 Markdown 是一个由 ChatGPT 开发的 Chrome 插件，旨在帮助用户轻松地将 ChatGPT 与 OpenAI 的对话记录下载为 Markdown 文件。生成的 Markdown 文件将包含整个对话内容，并在用户和助手之间进行明确区分。这款插件方便用户整理和查看聊天记录，提高工作效率。
+
+主要功能：
+
+- 在 ChatGPT 对话页面添加一个 "下载 Markdown" 按钮
+- 将整个对话记录转换为 Markdown 格式
+- 自动生成以 "Neo"（用户）和 "ChatGPT"（助手）为标题的聊天记录段落
+
+详细说明和使用方法，请参考 [history/extension/readme.md](history/extension/readme.md) 文件。
+
 
 ## 开发与贡献
 如果您想为 VecTextSearch 做出贡献或者对项目进行二次开发，您可以按照以下步骤操作：
