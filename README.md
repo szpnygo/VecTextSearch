@@ -128,7 +128,7 @@ ChatGPT 转 Markdown 是一个由 ChatGPT 开发的 Chrome 插件，旨在帮助
 - 将整个对话记录转换为 Markdown 格式
 - 自动生成以 "Neo"（用户）和 "ChatGPT"（助手）为标题的聊天记录段落
 
-详细说明和使用方法，请参考 [history/extension/readme.md](history/extension/readme.md) 文件。
+详细说明和使用方法，请参考[ChatGPT转Markdown插件](history/extension/)文件。
 
 
 ## 开发与贡献
