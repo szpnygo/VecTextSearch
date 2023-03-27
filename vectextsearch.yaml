@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vec-text-search
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vec-text-search
+  template:
+    metadata:
+      labels:
+        app: vec-text-search
+    spec:
+      containers:
+      - name: vec-text-search
+        image: neosu/vec-text-search:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: VECTEXTSEARCH_OPENAI_KEY
+          value: "your_openai_api_key_here"
+        - name: VECTEXTSEARCH_API_PORT
+          value: "8000"
+        - name: VECTEXTSEARCH_WEAVIATE_URL
+          value: "http://weaviate:8080"
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: vec-text-search
+spec:
+  selector:
+    app: vec-text-search
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+  type: ClusterIP
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: vec-text-search
+spec:
+  rules:
+  - host: your.domain.com
+    http:
+      paths:
+      - backend:
+          serviceName: vec-text-search
+          servicePort: http
+        path: /

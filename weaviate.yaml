@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weaviate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weaviate
+  template:
+    metadata:
+      labels:
+        app: weaviate
+    spec:
+      containers:
+      - name: weaviate
+        image: semitechnologies/weaviate:1.18.1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: QUERY_DEFAULTS_LIMIT
+          value: "25"
+        - name: AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED
+          value: "true"
+        - name: PERSISTENCE_DATA_PATH
+          value: "/var/lib/weaviate"
+        - name: DEFAULT_VECTORIZER_MODULE
+          value: "none"
+        - name: ENABLE_MODULES
+          value: ""
+        - name: AUTOSCHEMA_ENABLED
+          value: "true"
+        - name: CLUSTER_HOSTNAME
+          value: "node1"
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: weaviate
+spec:
+  selector:
+    app: weaviate
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
