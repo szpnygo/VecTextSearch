@@ -22,6 +22,8 @@ VecTextSearch 是一个使用 OpenAI 语言模型生成文本向量并在 Weavia
 
 [聊天记录5](history/chat5.md) - 把ChatGPT的聊天对话直接下载为Markdown文件
 
+[聊天记录6](history/chat6.md) - 添加跨域支持，修复make run命令的错误
+
 ## 效果
 ![image](images/postman.png)
 
