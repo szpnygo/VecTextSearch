@@ -8,6 +8,10 @@
 ![Docker Pulls](https://img.shields.io/docker/pulls/neosu/vec-text-search)
 
 VecTextSearch是一个使用OpenAI语言模型生成文本向量并在Weaviate数据库中进行高效搜索的项目。它允许用户将文本数据存储在Weaviate数据库中，并根据文本相似性快速搜索和检索相关文本。项目使用Golang编写，并提供一个简单的REST API供客户端调用
+
+
+简体中文 | [English](README_en.md)
+
 ## 项目介绍
 VecTextSearch 是一个使用 OpenAI 语言模型生成文本向量并在 Weaviate 数据库中进行高效搜索的项目。它允许用户将文本数据存储在 Weaviate 数据库中，并根据文本相似性快速搜索和检索相关文本。项目使用 Golang 编写，并提供一个简单的 REST API 供客户端调用。
 
