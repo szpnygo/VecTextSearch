@@ -1,6 +1,8 @@
 package services
 
 import (
+	"sync"
+
 	"github.com/google/uuid"
 	"github.com/szpnygo/VecTextSearch/config"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate"
@@ -8,6 +10,7 @@ import (
 )
 
 var weaviateClient *weaviate.Client
+var once sync.Once
 
 func initWeaviateClient(config *config.AppConfig) {
 	cfg := weaviate.Config{
@@ -18,9 +21,7 @@ func initWeaviateClient(config *config.AppConfig) {
 }
 
 func AddText(appConfig *config.AppConfig, name, content string) (string, error) {
-	if weaviateClient == nil {
-		initWeaviateClient(appConfig)
-	}
+	once.Do(func() { initWeaviateClient(appConfig) })
 	embedding, err := getEmbedding(content, appConfig.OpenAIKey)
 	if err != nil {
 		return "", err
@@ -46,9 +47,7 @@ func AddText(appConfig *config.AppConfig, name, content string) (string, error) 
 }
 
 func SearchSimilarTexts(appConfig *config.AppConfig, content string) (*models.GraphQLResponse, error) {
-	if weaviateClient == nil {
-		initWeaviateClient(appConfig)
-	}
+	once.Do(func() { initWeaviateClient(appConfig) })
 	embedding, err := getEmbedding(content, appConfig.OpenAIKey)
 	if err != nil {
 		return nil, err
