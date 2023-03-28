@@ -1,0 +1,110 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+/* 添加一些自定义样式来提高科技感 */
+.tech-font {
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+.tech-bg {
+    background-color: rgba(10, 25, 47, 0.9);
+    color: white;
+}
+
+.results-row {
+    word-wrap: break-word;
+}
+
+/* 结果卡片样式 */
+.result-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.content {
+    flex: 1;
+    font-size: 14px;
+}
+
+.progress {
+    position: relative;
+    width: 200px;
+    height: 20px;
+    background-color: rgba(10, 25, 47, 0.1);
+    margin: 0 10px;
+}
+
+.determinate {
+    position: absolute;
+    height: 100%;
+    background-color: rgba(10, 25, 47, 0.9);
+}
+
+.similarity {
+    font-size: 14px;
+    color: rgba(10, 25, 47, 0.9);
+    margin-left: 10px;
+}
+
+.preset-queries {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.preset-btn {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.preset-btn:hover {
+    background-color: #1976d2;
+}
+
+.preset-queries span {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* 解决快捷搜索文本与输入框提示文本重叠的问题 */
+#search-input {
+    padding-top: 30px;
+}
+
+#search-input::placeholder {
+    color: rgba(10, 25, 47, 0.5);
+    font-weight: normal;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    transition: all 0.2s ease;
+}
+
+#search-input:focus::placeholder {
+    color: transparent;
+}
