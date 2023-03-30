@@ -26,7 +26,14 @@ VecTextSearch is a project that uses OpenAI language models to generate text vec
 [Chat log 6](history/chat6.md) - Adding CORS support, fixing errors in the make run command
 
 ## Effects
+### postman
 ![image](images/postman.png)
+
+### web
+![image](images/web_demo.jpeg)
+
+### flutter
+![image](images/flutter_demo.jpeg)
 
 
 ## Project Background

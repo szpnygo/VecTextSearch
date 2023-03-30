@@ -29,8 +29,15 @@ VecTextSearch 是一个使用 OpenAI 语言模型生成文本向量并在 Weavia
 [聊天记录6](history/chat6.md) - 添加跨域支持，修复make run命令的错误
 
 ## 效果
+
+### postman
 ![image](images/postman.png)
 
+### web
+![image](images/web_demo.jpeg)
+
+### flutter
+![image](images/flutter_demo.jpeg)
 
 ## 项目背景
 在许多实际应用中，需要基于文本相似性进行快速搜索。例如，给定一篇文章，可以找到与其内容相似的其他文章。传统的基于关键词的搜索方法可能无法准确捕捉到文本之间的相似性。VecTextSearch 利用 OpenAI 的强大语言模型将文本转换为向量表示，然后使用 Weaviate 数据库进行高效的相似向量搜索。
