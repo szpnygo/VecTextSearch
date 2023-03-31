@@ -28,6 +28,8 @@ VecTextSearch 是一个使用 OpenAI 语言模型生成文本向量并在 Weavia
 
 [聊天记录6](history/chat6.md) - 添加跨域支持，修复make run命令的错误
 
+[聊天记录7](history/chat7.md) - 修复文档错误
+
 ## 效果
 
 ### postman
@@ -100,18 +102,15 @@ VecTextSearch 提供了两个 REST API 接口：
 Response: 搜索成功后，将返回一个包含相似文本信息的 JSON 对象。
 
 ```json
-{
-  "data": [
-    {
-      "id": "文章唯一标识符",
-      "name": "文章名称",
-      "content": "文章内容",
-      "distance": "与查询内容的距离",
-      "certainty": "与查询内容的相似度"
-    },
-    ...
-  ]
-}
+[
+  {
+    "name": "文章名称",
+    "content": "文章内容",
+    "distance": 浮点数（与查询内容的距离）,
+    "certainty": 浮点数（与查询内容的相似度）
+  },
+  ...
+]
 ```
 
 ## Makefile 功能说明
