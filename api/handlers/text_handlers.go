@@ -21,6 +21,19 @@ func AddTextHandler(appConfig *config.AppConfig) gin.HandlerFunc {
 			return
 		}
 
+		// Check for duplicate content if not allowed
+		if !appConfig.AllowDuplicateContent {
+			response, err := services.FindExactText(appConfig, input.Content)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
+			if len(response.Data["Get"].(map[string]interface{})["Text"].([]interface{})) > 0 { // 修改这一行
+				c.JSON(http.StatusBadRequest, gin.H{"error": "Duplicate content not allowed"})
+				return
+			}
+		}
+
 		id, err := services.AddText(appConfig, input.Name, input.Content)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

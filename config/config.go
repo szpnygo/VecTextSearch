@@ -8,9 +8,10 @@ import (
 
 // AppConfig contains the application's configuration.
 type AppConfig struct {
-	APIPort     int
-	WeaviateURL string
-	OpenAIKey   string
+	APIPort               int
+	WeaviateURL           string
+	OpenAIKey             string
+	AllowDuplicateContent bool
 }
 
 // LoadConfig loads the configuration from environment variables.
@@ -30,9 +31,15 @@ func LoadConfig() (*AppConfig, error) {
 		return nil, errors.New("VECTEXTSEARCH_OPENAI_KEY not set")
 	}
 
+	allowDuplicateContent := true // default value
+	if os.Getenv("VECTEXTSEARCH_ALLOW_DUPLICATE_CONTENT") == "false" {
+		allowDuplicateContent = false
+	}
+
 	return &AppConfig{
-		APIPort:     apiPort,
-		WeaviateURL: weaviateURL,
-		OpenAIKey:   openAIKey,
+		APIPort:               apiPort,
+		WeaviateURL:           weaviateURL,
+		OpenAIKey:             openAIKey,
+		AllowDuplicateContent: allowDuplicateContent,
 	}, nil
 }

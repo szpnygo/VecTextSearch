@@ -65,3 +65,13 @@ func SearchSimilarTexts(appConfig *config.AppConfig, content string) (*models.Gr
 
 	return response, nil
 }
+
+func FindExactText(appConfig *config.AppConfig, content string) (*models.GraphQLResponse, error) {
+	once.Do(func() { initWeaviateClient(appConfig) })
+	response, err := findTextByContent(weaviateClient, content)
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
