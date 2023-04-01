@@ -3,15 +3,16 @@ package services
 import (
 	"context"
 
+	"github.com/szpnygo/VecTextSearch/config"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate/filters"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate/graphql"
 	"github.com/weaviate/weaviate/entities/models"
 )
 
-func addVector(client *weaviate.Client, id string, dataSchema map[string]interface{}, vector []float32) error {
+func addVector(client *weaviate.Client, appConfig *config.AppConfig, id string, dataSchema map[string]interface{}, vector []float32) error {
 	_, err := client.Data().Creator().
-		WithClassName("Text").
+		WithClassName(appConfig.WeaviateClassName).
 		WithID(id).
 		WithProperties(dataSchema).
 		WithVector(vector).
@@ -20,8 +21,7 @@ func addVector(client *weaviate.Client, id string, dataSchema map[string]interfa
 	return err
 }
 
-func searchVectors(client *weaviate.Client, vector []float32) (*models.GraphQLResponse, error) {
-	className := "Text"
+func searchVectors(client *weaviate.Client, appConfig *config.AppConfig, vector []float32) (*models.GraphQLResponse, error) {
 	name := graphql.Field{Name: "name"}
 	content := graphql.Field{Name: "content"}
 	_additional := graphql.Field{
@@ -37,7 +37,7 @@ func searchVectors(client *weaviate.Client, vector []float32) (*models.GraphQLRe
 
 	ctx := context.Background()
 	result, err := client.GraphQL().Get().
-		WithClassName(className).
+		WithClassName(appConfig.WeaviateClassName).
 		WithFields(name, content, _additional).
 		WithNearVector(nearVector).
 		Do(ctx)
@@ -45,7 +45,7 @@ func searchVectors(client *weaviate.Client, vector []float32) (*models.GraphQLRe
 	return result, err
 }
 
-func findTextByContent(client *weaviate.Client, content string) (*models.GraphQLResponse, error) {
+func findTextByContent(client *weaviate.Client, appConfig *config.AppConfig, content string) (*models.GraphQLResponse, error) {
 	// 创建 where 过滤器
 	whereFilter := filters.Where().
 		WithPath([]string{"content"}).
@@ -60,7 +60,7 @@ func findTextByContent(client *weaviate.Client, content string) (*models.GraphQL
 
 	// 构建 GraphQL 查询
 	queryBuilder := client.GraphQL().Get().
-		WithClassName("Text").
+		WithClassName(appConfig.WeaviateClassName).
 		WithFields(fields...).
 		WithWhere(whereFilter)
 

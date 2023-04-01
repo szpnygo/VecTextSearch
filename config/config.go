@@ -12,6 +12,7 @@ type AppConfig struct {
 	WeaviateURL           string
 	OpenAIKey             string
 	AllowDuplicateContent bool
+	WeaviateClassName     string
 }
 
 // LoadConfig loads the configuration from environment variables.
@@ -36,10 +37,16 @@ func LoadConfig() (*AppConfig, error) {
 		allowDuplicateContent = false
 	}
 
+	weaviateClassName := os.Getenv("VECTEXTSEARCH_WEAVIATE_CLASS_NAME")
+	if weaviateClassName == "" {
+		weaviateClassName = "Text" // 使用默认值
+	}
+
 	return &AppConfig{
 		APIPort:               apiPort,
 		WeaviateURL:           weaviateURL,
 		OpenAIKey:             openAIKey,
 		AllowDuplicateContent: allowDuplicateContent,
+		WeaviateClassName:     weaviateClassName,
 	}, nil
 }

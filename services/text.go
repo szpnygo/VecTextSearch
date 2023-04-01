@@ -38,7 +38,7 @@ func AddText(appConfig *config.AppConfig, name, content string) (string, error) 
 		"content": content,
 	}
 
-	err = addVector(weaviateClient, id, dataSchema, float32Embedding)
+	err = addVector(weaviateClient, appConfig, id, dataSchema, float32Embedding)
 	if err != nil {
 		return "", err
 	}
@@ -58,7 +58,7 @@ func SearchSimilarTexts(appConfig *config.AppConfig, content string) (*models.Gr
 		float32Embedding[i] = float32(v)
 	}
 
-	response, err := searchVectors(weaviateClient, float32Embedding)
+	response, err := searchVectors(weaviateClient, appConfig, float32Embedding)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func SearchSimilarTexts(appConfig *config.AppConfig, content string) (*models.Gr
 
 func FindExactText(appConfig *config.AppConfig, content string) (*models.GraphQLResponse, error) {
 	once.Do(func() { initWeaviateClient(appConfig) })
-	response, err := findTextByContent(weaviateClient, content)
+	response, err := findTextByContent(weaviateClient, appConfig, content)
 	if err != nil {
 		return nil, err
 	}
